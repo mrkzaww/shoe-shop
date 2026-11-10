@@ -148,15 +148,15 @@ python main.py
 
 ## Запуск PostgreSQL через Docker Compose
 
-Предварительные требования: Docker Desktop (Linux containers, Docker Compose v2), Git.
+Предварительные требования: Docker Desktop (Linux containers, Docker Compose v2+), Git.
 
 1. Создать файл `.env` из образца и задать собственный локальный пароль (файл в репозиторий не попадает):
    `cp .env.example .env`, затем изменить `POSTGRES_PASSWORD`.
 2. Запустить сервисы: `docker compose up --build -d`. Будут запущены PostgreSQL 14 (`db`) и одноразовая проверка подключения (`db-check`).
 3. Проверить состояние: `docker compose ps -a` и `docker compose logs --tail=40 db-check` (в журнале должна быть строка `OK`; статус `Exited (0)` у `db-check` нормален).
 4. Импортировать базу данных:
-   `docker compose cp database/shoe_store.sql db:/tmp/shoe_store.sql`, затем
-   `docker compose exec db psql -v ON_ERROR_STOP=1 -U shoe_user -d shoe_store -f /tmp/shoe_store.sql`.
-5. В `config.ini` указать адрес подключения приложения: `host = localhost`, `port = 5433`, `name = shoe_store`, `user = shoe_user` и пароль из `.env`. Из контейнера `db-check` база доступна по адресу `db:5432`.
+   `docker compose cp database/database.sql db:/tmp/database.sql`, затем
+   `docker compose exec db psql -v ON_ERROR_STOP=1 -U shoe_user -d shoe_store -f /tmp/database.sql`.
+5. В `config.ini` указать адрес подключения приложения: `host = localhost`, `port = 5433`, `database = shoe_store`, `user = shoe_user` и пароль из `.env`. Из контейнера `db-check` база доступна по адресу `db:5432`.
 6. Запустить приложение: `python main.py`.
 7. Остановить сервисы: `docker compose stop`; запустить снова: `docker compose start`. Команду `docker compose down -v` не использовать: данные в этой конфигурации не считаются сохранёнными.
