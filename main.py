@@ -12,6 +12,7 @@ from PyQt5 import uic
 import psycopg2
 import random
 from psycopg2 import sql
+from db_config import DB_CONFIG
 
 # --- Константы ---
 RESOURCES = "resources"
@@ -27,14 +28,6 @@ COLOR_OUT_OF_STOCK = "#ADD8E6"
 # Глобальные переменные
 current_user = {"fio": "Гость", "role": "guest"}
 
-# --- Настройки подключения к БД ---
-DB_CONFIG = {
-    'host': 'localhost',
-    'database': 'magazin_obuv',
-    'user': 'postgres',
-    'password': '100820',
-    'port': 5432
-}
 # --- Функции для работы с БД ---
 def get_db_connection():
     try:
