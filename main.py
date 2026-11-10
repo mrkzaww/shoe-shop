@@ -671,7 +671,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.app = app
         uic.loadUi("ui/Main.ui", self)
-        self.setWindowTitle("Обувь — Просмотр товара")
+        self.setWindowTitle("Обувь — Каталог товаров")
         if os.path.exists(ICON_PATH):
             self.setWindowIcon(QIcon(ICON_PATH))
         self.current_index = 0
