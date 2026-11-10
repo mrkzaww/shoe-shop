@@ -12,7 +12,13 @@ from PyQt5 import uic
 import psycopg2
 import random
 from psycopg2 import sql
-from db_config import DB_CONFIG
+
+try:
+    from db_config import DB_CONFIG
+    DB_CONFIG_ERROR = None
+except Exception as e:
+    DB_CONFIG = None
+    DB_CONFIG_ERROR = str(e)
 
 # --- Константы ---
 RESOURCES = "resources"
@@ -31,11 +37,25 @@ current_user = {"fio": "Гость", "role": "guest"}
 
 # --- Функции для работы с БД ---
 def get_db_connection():
+    if DB_CONFIG is None:
+        QMessageBox.critical(
+            None,
+            "Ошибка БД",
+            f"Не удалось загрузить настройки подключения:\n{DB_CONFIG_ERROR}\n\n"
+            "Скопируйте config.ini.example в config.ini и укажите параметры подключения."
+        )
+        return None
     try:
         conn = psycopg2.connect(**DB_CONFIG)
         return conn
     except Exception as e:
-        QMessageBox.critical(None, "Ошибка БД", f"Не удалось подключиться к базе данных:\n{e}")
+        QMessageBox.critical(
+            None,
+            "Ошибка БД",
+            f"Не удалось подключиться к базе данных:\n{e}\n\n"
+            "Проверьте, что сервер PostgreSQL запущен, а параметры подключения "
+            "в файле config.ini указаны верно."
+        )
         return None
 
 def fetch_all_products():
