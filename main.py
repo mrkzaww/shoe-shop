@@ -823,7 +823,7 @@ class MainWindow(QMainWindow):
             self.load_product()
             QMessageBox.information(self, "Результат", f"Показан товар: {filtered[0]['name']}")
         else:
-            QMessageBox.information(self, "Результат", "Нет товаров по заданным критериям.")
+            QMessageBox.information(self, "Результат", "Нет товаров, подходящих под заданные критерии.")
 
     def add_product(self):
         if current_user["role"] != "Администратор":
