@@ -24,6 +24,7 @@ COLOR_ADD_BG = "#7FFF00"
 COLOR_ACCENT = "#00FA9A"
 COLOR_HIGH_DISCOUNT = "#2E8B57"
 COLOR_OUT_OF_STOCK = "#ADD8E6"
+HIGH_DISCOUNT_THRESHOLD = 15
 
 # Глобальные переменные
 current_user = {"fio": "Гость", "role": "guest"}
@@ -761,7 +762,7 @@ class MainWindow(QMainWindow):
         self.parametr.setText(info)
         self.parametr.setTextFormat(Qt.RichText)
         discount = prod.get("discount", 0)
-        if discount > 15:
+        if discount > HIGH_DISCOUNT_THRESHOLD:
             self.sale.setStyleSheet(f"background-color: {COLOR_HIGH_DISCOUNT}; color: white; font-weight: bold;")
         else:
             self.sale.setStyleSheet("")
