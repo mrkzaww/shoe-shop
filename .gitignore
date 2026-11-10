@@ -16,3 +16,4 @@ config.ini
 *.log
 
 pz11_outputs/
+.DS_Store
